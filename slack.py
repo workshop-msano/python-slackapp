@@ -31,9 +31,13 @@ def main():
         payload['ts'] = item['ts']
         response_reply = requests.get(SLACK_URL_REP, headers=headersAuth, params=payload)
         json_data = response_reply.json()
-        msgs = json_data['messages']
+        inner_msgs = json_data['messages']
 
-        print("rep msgs", msgs)
+        # print("rep msgs", inenr_msgs)
+        for inner_item in inner_msgs:
+            print(inner_item['user'])
+            print(inner_item['text'])
+            print("-----")
 
 
 if __name__ == "__main__":
