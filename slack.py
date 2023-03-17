@@ -1,13 +1,18 @@
 import requests
-import datetime, time
+import datetime, time, os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 SLACK_CHANNEL_ID = 'CUF6LFWFR'
 SLACK_URL_HIS = "https://slack.com/api/conversations.history"
 SLACK_URL_REP = "https://slack.com/api/conversations.replies"
-TOKEN = "xoxp-967572516294-964908956884-4981362419745-6550b98932bed8621b758f6cec1d05c1"
+SLACK_URL_USERSINFO = "https://slack.com/api/users.info"
+
+TOKEN = os.getenv("TOKEN")
 
 def main():
-    today = datetime.date.today()
+    today = datetime.date.today() #ファイル実行のタイミングに注意
     start_date = today + datetime.timedelta(days=-7)
     end_date = today + datetime.timedelta(days=1)
 
@@ -24,20 +29,33 @@ def main():
     response_main = requests.get(SLACK_URL_HIS, headers=headersAuth, params=payload)
     json_data = response_main.json()
     msgs = json_data['messages']
-    # print(msgs)
 
     #replyメッセージ取得
-    for item in msgs:
-        payload['ts'] = item['ts']
+    result = []
+    for msg in msgs:
+        payload['ts'] = msg['ts'] #update payload
         response_reply = requests.get(SLACK_URL_REP, headers=headersAuth, params=payload)
         json_data = response_reply.json()
-        inner_msgs = json_data['messages']
+        include_reply_msgs = json_data['messages']
 
-        # print("rep msgs", inenr_msgs)
-        for inner_item in inner_msgs:
-            print(inner_item['user'])
-            print(inner_item['text'])
+        for msg in include_reply_msgs:
+            info = {}
+            payload['user'] = msg['user'] #update payload
+            response_usersinfo = requests.get(SLACK_URL_USERSINFO, headers=headersAuth, params=payload)
+            json_data = response_usersinfo.json()
+            info["real_name"] = json_data['user']['real_name']
+            info["user_id"] = msg['user']
+            info["text"] = msg['text']
+            if "parent_user_id" in msg : 
+                info["is_reply"] = True
+            else:
+                info["is_reply"] = False
+            
+            print(info)
             print("-----")
+            result.append(info)
+    print(result)
+    return result
 
 
 if __name__ == "__main__":
