@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-# import gspread
 from googleapiclient import discovery
 import os
 
@@ -11,24 +10,16 @@ from slack import get_posts
 
 def main():
     posts = get_posts()
-    # print(posts)
-    # for post in posts:
-    #     print(post)
-    # print("-----//")
-
-    #credential情報を取得する
     cred = get_cred()
 
     service = discovery.build('sheets', 'v4', credentials=cred)
 
-    #スプレッドシートIDを変数に格納する。
     SPREADSHEET_ID = os.getenv("SHEET_ID")
-
-    RANGE_NAME = 'slackapp_test!A3'
+    RANGE_NAME = 'slackapp_test!A2' #シートと書き込み開始位置を指定
 
     value_input_option = 'RAW'
     range_name = RANGE_NAME
-    values = [['aa']]
+    values = posts
     data = [
         {
             'range': range_name,
