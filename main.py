@@ -1,36 +1,48 @@
-import gspread
-from google.oauth2.service_account import Credentials
-import os
 from dotenv import load_dotenv
 load_dotenv()
 
+# import gspread
+from googleapiclient import discovery
+import os
+
+from cred import get_cred
 from slack import get_posts
 
+
 def main():
-    #slack apiでデータを取得する
     posts = get_posts()
     # print(posts)
     # for post in posts:
     #     print(post)
-    print("-----//")
+    # print("-----//")
 
-    #スプレッドシート書き込み
-    # お決まりの文句
-    # 2つのAPIを記述しないとリフレッシュトークンを3600秒毎に発行し続けなければならない
-    scope = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
-    #ダウンロードしたjsonファイル名をクレデンシャル変数に設定。
-    credentials = Credentials.from_service_account_file("./credential.json", scopes=scope)
-    #OAuth2の資格情報を使用してGoogle APIにログイン。
-    gc = gspread.authorize(credentials)
+    #credential情報を取得する
+    cred = get_cred()
+
+    service = discovery.build('sheets', 'v4', credentials=cred)
+
     #スプレッドシートIDを変数に格納する。
-    SPREADSHEET_KEY = os.getenv("SHEET_ID")
-    # スプレッドシート（ブック）を開く
-    workbook = gc.open_by_key(SPREADSHEET_KEY)
-    # シートを開く
-    worksheet = workbook.worksheet('slackapp_test')
-    
-    # セルA1に”test value”という文字列を代入する。
-    worksheet.update_cell(1, 1, 'slackapp_test')
+    SPREADSHEET_ID = os.getenv("SHEET_ID")
+
+    RANGE_NAME = 'slackapp_test!A3'
+
+    value_input_option = 'RAW'
+    range_name = RANGE_NAME
+    values = [['aa']]
+    data = [
+        {
+            'range': range_name,
+            'values': values
+        },
+    ]
+    body = {
+    'valueInputOption': value_input_option,
+    'data': data
+    }
+    result = service.spreadsheets().values().batchUpdate(
+        spreadsheetId=SPREADSHEET_ID, body=body).execute()
+    print(result)
+
 
 
 if __name__ == "__main__":
