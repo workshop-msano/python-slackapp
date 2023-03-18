@@ -4,8 +4,8 @@ load_dotenv()
 from googleapiclient import discovery
 import os
 
-from cred import get_cred
-from slack import get_posts
+from components.cred import get_cred
+from components.slack import get_posts
 
 
 def main():
@@ -33,7 +33,6 @@ def main():
     result = service.spreadsheets().values().batchUpdate(
         spreadsheetId=SPREADSHEET_ID, body=body).execute()
     print(result)
-
 
 
 if __name__ == "__main__":

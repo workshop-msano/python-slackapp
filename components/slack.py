@@ -1,7 +1,6 @@
 import requests
 import datetime, time, os
 
-SLACK_CHANNEL_ID = 'CUF6LFWFR'
 SLACK_URL_HIS = "https://slack.com/api/conversations.history"
 SLACK_URL_REP = "https://slack.com/api/conversations.replies"
 SLACK_URL_USERSINFO = "https://slack.com/api/users.info"
