@@ -42,16 +42,16 @@ def get_posts(channel):
 
         #投稿ユーザーのreal nameを取得
         for inner_msg in include_reply_msgs:
-            info = []
+            info = [] 
             payload['user'] = inner_msg['user'] #update payload
             response_usersinfo = requests.get(SLACK_URL_USERSINFO, headers=headersAuth, params=payload)
             json_data = response_usersinfo.json()
 
             info.append(datetime.datetime.fromtimestamp(float(inner_msg['ts'])).strftime('%Y-%m-%d %H:%M:%S'))
-            info.append(inner_msg['user'])
-            info.append(json_data['user']['profile']['real_name'])
-            info.append(inner_msg['text'])
-            if "parent_user_id" in inner_msg : 
+            info.append(inner_msg['user']) #user id
+            info.append(json_data['user']['profile']['real_name']) #user name
+            info.append(inner_msg['text']) #text 
+            if "parent_user_id" in inner_msg : #is text reply(True) or not(False)
                 info.append(True)
             else:
                 info.append(False)

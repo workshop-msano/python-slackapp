@@ -1,12 +1,13 @@
 <html>
   <body>
+    <h2>Get messages from a Slack Channel!</h2>
     <form action="{{url_for('index')}}" method="post">
       {% if message == "post" %}
-        <p>Check Google Spread Sheet</p>
+        <p>Google Spread Sheet is updated</p>
       {% else %}
         <p>Enter Slack-channel and Sheet-ID:</p>
       {% endif %}
-      <p><input type="text" name="channel" placeholder="CHANNEL" /></p>
+      <p><input type="text" name="channel" placeholder="SLACK CHANNEL" /></p>
       <p><input type="text" name="sheet-id" placeholder="SHEET ID" /></p>
       <p><input type="submit" value="submit" /></p>
     </form>
