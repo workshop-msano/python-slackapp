@@ -1,15 +1,18 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask, redirect, request, url_for, render_template
 from googleapiclient import discovery
-import os
+from flask import Flask, redirect, request, url_for, render_template
+from flask_bootstrap import Bootstrap
+from flask_datepicker import datepicker
 
 from components.cred import get_cred
 from components.slack import get_posts
 
 
 app = Flask(__name__)
+Bootstrap(app)
+datepicker(app)
 
 @app.route('/slack/<mtd>',  methods=["POST", "GET"])
 def slack(mtd):
@@ -27,9 +30,12 @@ def index():
         # SPREADSHEET_ID = os.getenv("SHEET_ID")
         SPREADSHEET_ID = request.form["sheet-id"]
         CHANNEL = request.form["channel"]
+        START_DATE = request.form["start_date"]
+        END_DATE=request.form["end_date"]
+        # print(START_DATE)
 
         cred = get_cred()
-        posts = get_posts(CHANNEL)
+        posts = get_posts(CHANNEL, START_DATE, END_DATE)
 
 
         service = discovery.build('sheets', 'v4', credentials=cred)
