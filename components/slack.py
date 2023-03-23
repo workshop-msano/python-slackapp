@@ -7,7 +7,7 @@ SLACK_URL_USERSINFO = "https://slack.com/api/users.info"
 
 TOKEN = os.getenv("TOKEN") 
 
-def get_posts():
+def get_posts(channel):
     today = datetime.date.today()
     end_date = today + datetime.timedelta(days=1)
     # start_date = today + datetime.timedelta(days=-10)
@@ -16,7 +16,8 @@ def get_posts():
     Unix_start_date_timestamp = datetime.datetime.timestamp(formated_start_date) 
 
     payload = {
-        "channel": os.getenv("CHANNEL"),
+        # "channel": os.getenv("CHANNEL"),
+        "channel": channel,
         "latest": time.mktime(end_date.timetuple()),
         # "oldest" : time.mktime(start_date.timetuple()),  
         "oldest" : Unix_start_date_timestamp,  
