@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask, redirect, request, url_for
+from flask import Flask, redirect, request, url_for, render_template
 from googleapiclient import discovery
 import os
 
@@ -11,11 +11,16 @@ from components.slack import get_posts
 
 app = Flask(__name__)
 
-@app.route('/message/<msg>')
+@app.route('/message/<msg>',  methods=["POST", "GET"])
 def message(msg):
-   return '%s' % msg
+    if request.method == "POST":
+        print(msg)
+        return redirect(url_for(''))
 
-message=""
+    else:
+        return render_template("msg.html", message=msg, url_for=url_for)
+
+
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
