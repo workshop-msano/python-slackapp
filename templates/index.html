@@ -26,13 +26,13 @@
     {% if message == "post" %}
     <p>Google Spread Sheet is updated</p>
     {% else %}
-    <p>Enter Slack-channel and Sheet-ID:</p>
+    <p>Enter Slack-Channel-ID and Sheet-ID:</p>
     {% endif %}
-    <p><input type="text" name="channel" placeholder="SLACK CHANNEL" /></p>
-    <p><input type="text" name="sheet-id" placeholder="SHEET ID" /></p>
+    <p><input type="text" name="channel" placeholder="Slack Channel ID" /></p>
+    <p><input type="text" name="sheet-id" placeholder="Sheet ID" /></p>
     <p>
-      <input type="text" class="form-control dp" name="start_date"/>
-      <input type="text" class="form-control dp" name="end_date"/>
+      <input type="text" class="form-control dp" name="start_date" placeholder="From"/>
+      <input type="text" class="form-control dp" name="end_date" placeholder="To"/>
     </p>
     <p><input type="submit" value="submit" /></p>
   </form>
