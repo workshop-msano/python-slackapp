@@ -11,24 +11,24 @@ from components.slack import get_posts
 
 app = Flask(__name__)
 
-@app.route('/message/<msg>',  methods=["POST", "GET"])
-def message(msg):
+@app.route('/slack/<msg>',  methods=["POST", "GET"])
+def slack(msg):
     if request.method == "POST":
-        print(msg)
         return redirect(url_for(''))
 
     else:
-        return render_template("msg.html", message=msg, url_for=url_for)
+        return render_template("index.html", message=msg, url_for=url_for)
+
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
         message="post"
-        return redirect(url_for('message', msg=message))
+        return redirect(url_for('slack', msg=message))
     else:
         message="get"
-        return redirect(url_for('message', msg=message))
+        return redirect(url_for('slack', msg=message))
     
 
 # posts = get_posts()
