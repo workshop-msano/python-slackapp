@@ -27,12 +27,10 @@ def index():
     if request.method == "POST":
         method="post"
 
-        # SPREADSHEET_ID = os.getenv("SHEET_ID")
         SPREADSHEET_ID = request.form["sheet-id"]
         CHANNEL = request.form["channel"]
         START_DATE = request.form["start_date"]
         END_DATE=request.form["end_date"]
-        # print(START_DATE)
 
         try:
             cred = get_cred()
