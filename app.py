@@ -71,6 +71,7 @@ def index():
         method="get"
         return redirect(url_for('slack', mtd=method))
 
+
 @app.route("/signout", methods=["POST", "GET"])
 def signout():
     if "state" in session:
