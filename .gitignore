@@ -5,5 +5,5 @@ __pycache__
 .env_docomo
 .env_test
 
-credential.json
-
+credentials.json
+client_secret.json

@@ -2,17 +2,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from googleapiclient import discovery
-from flask import Flask, redirect, request, url_for, render_template
+from flask import Flask, redirect, request, url_for, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_datepicker import datepicker
 
-from components.cred import get_cred
+from components.cred import get_cred, get_auth
 from components.slack import get_posts
+
+import os
 
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
 Bootstrap(app)
 datepicker(app)
+
 
 @app.route('/slack/<mtd>',  methods=["POST", "GET"])
 def slack(mtd):
@@ -24,6 +28,7 @@ def slack(mtd):
 
 @app.route("/", methods=["POST", "GET"])
 def index():
+    cred = get_cred()
     if request.method == "POST":
         method="post"
 
@@ -33,11 +38,9 @@ def index():
         END_DATE=request.form["end_date"]
 
         try:
-            cred = get_cred()
             posts = get_posts(CHANNEL, START_DATE, END_DATE)
 
             service = discovery.build('sheets', 'v4', credentials=cred)
-
 
             RANGE_NAME = 'slackapp_test!A2' #シートと書き込み開始位置を指定/定値
 
@@ -61,6 +64,10 @@ def index():
         except:
             return render_template("index.html", method="error")
     else:
+        if "state" not in session:
+            auth=get_auth()
+            session["state"]=auth.state
+            return redirect(auth.authorization_url)
         method="get"
         return redirect(url_for('slack', mtd=method))
 
