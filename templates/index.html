@@ -1,42 +1,64 @@
-{% extends 'bootstrap/base.html' %} 
-{% block scripts %} {{ super() }} 
-{{ datepicker.loader(theme="base") }} 
-{# to load jQuery-ui #} 
-{{ datepicker.picker(id=".dp") }} 
-{% endblock %} {% block content %}
-<h1>SlackChatCatcher</h1>
-<form action="{{url_for('signout')}}" method="get">
-  <p><input type="submit" value="singout" /></p>
-</form>
-<form class="verticalform" action="{{url_for('index')}}" method="post">
-  {% if method == "post" %}
-  <p>Google Spread Sheet is updated</p>
-  {% else %}
-  <p>
-    Enter infomation:
-      <p><input type="text" name="channel" placeholder="Slack Channel ID" /></p>
-      <p><input type="text" name="sheet-id" placeholder="Spread Sheet ID" /></p>
-    </p>
+{% extends 'base.html' %}
+{% block body %}
+  {% block scripts %} 
+  {{ super() }} 
+  {{ datepicker.loader(theme="base") }} 
+  {# to load jQuery-ui #} 
+  {{ datepicker.picker(id=".dp") }} 
+  {% endblock %} 
+  {% block content %}
+  <div class="d-flex flex-row mb-2">
+    <div class='p-5'>
+      <h1>Slack Chat Catcher 🧐</h1>
+      <p class="text-secondary p-3">Get messages from Slack Channel</p>
+    </div>
+    <div class='p-5'>
+      <form action="{{url_for('signout')}}" method="get">
+        <input type="submit" value="singout" type="button" class="btn btn-secondary"/>
+      </form>
+    </div>
+  </div>
 
-    <p>
-      Enter duration:
-      <input
-        type="text"
-        class="form-control dp"
-        name="start_date"
-        placeholder="From"
-        />
+  <form class="verticalform" action="{{url_for('index')}}" method="post">
+    {% if method == "post" %}
+    <h4 class="text-success p-3">Google Spread Sheet is updated</h4>
+    {% else %}
+
+    <div class="d-flex flex-row mb-3">
+      <div class="p-4 text-secondary">Select duration: </div>
+      <div class="p-3">
+        <input
+          type="text"
+          class="form-control dp"
+          name="start_date"
+          placeholder="From"
+          />
+      </div>
+      <div class="p-3">
         <input
         type="text"
         class="form-control dp"
         name="end_date"
         placeholder="To"
         />
-      </p>
-      <p><input type="submit" value="submit" /></p>
-    </form>
-    {% if method == "error" %}
-    <p>Oops! Invalid information. Try again...</p>
+        </div>
+    </div>
+
+      <div class="d-flex flex-column mb-2">
+        <div class="p-4">
+          <input type="text" name="channel" placeholder="Slack Channel ID" class="w-25"/>
+        </div>
+        <div class="p-4">
+          <input type="text" name="sheet-id" placeholder="Spread Sheet ID" class="w-25"/>
+        </div>
+      </div>
+
+        
+      <div class="p-4"><input type="submit" value="submit" type="button" class="btn btn-primary"/></div>
+      </form>
+        {% if method == "error" %}
+        <h4 class="text-danger p-3">Oops! Invalid information. Try again...</h4>
+        {% endif %}
     {% endif %}
-{% endif %}
+  {% endblock %}
 {% endblock %}
