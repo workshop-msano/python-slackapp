@@ -66,13 +66,18 @@ def index():
     else:
         if "state" not in session:
             auth=get_auth()
-            session["state"]=auth.state
-            return redirect(auth.authorization_url)
+            session["state"]=auth["state"]
+            return redirect(auth["authorization_url"])
         method="get"
         return redirect(url_for('slack', mtd=method))
 
-    
+@app.route("/signout", methods=["POST", "GET"])
+def signout():
+    if "state" in session:
+        del session["state"]
+        return render_template("signout.html")
 
+    
 if __name__ == "__main__":
     port = 8000
     app.run(debug=True, host='0.0.0.0', port=port)

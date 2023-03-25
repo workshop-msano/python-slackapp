@@ -1,4 +1,3 @@
-# import google.oauth2.credentials
 import google_auth_oauthlib.flow
 from google.oauth2.service_account import Credentials
 import os

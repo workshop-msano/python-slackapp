@@ -1,7 +1,13 @@
-{% extends 'bootstrap/base.html' %} {% block scripts %} {{ super() }} {{
-datepicker.loader(theme="base") }} {# to load jQuery-ui #} {{
-datepicker.picker(id=".dp") }} {% endblock %} {% block content %}
+{% extends 'bootstrap/base.html' %} 
+{% block scripts %} {{ super() }} 
+{{ datepicker.loader(theme="base") }} 
+{# to load jQuery-ui #} 
+{{ datepicker.picker(id=".dp") }} 
+{% endblock %} {% block content %}
 <h1>SlackChatCatcher</h1>
+<form action="{{url_for('signout')}}" method="get">
+  <p><input type="submit" value="singout" /></p>
+</form>
 <form class="verticalform" action="{{url_for('index')}}" method="post">
   {% if method == "post" %}
   <p>Google Spread Sheet is updated</p>
