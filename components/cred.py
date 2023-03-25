@@ -17,7 +17,10 @@ def get_auth():
     # match one of the authorized redirect URIs for the OAuth 2.0 client, which you
     # configured in the API Console. If this value doesn't match an authorized URI,
     # you will get a 'redirect_uri_mismatch' error.
-    flow.redirect_uri = 'http://localhost:8000'
+
+    # flow.redirect_uri = 'http://localhost:8000'
+    flow.redirect_uri = 'https://slack-chat-catcher.onrender.com'
+
 
     # Generate URL for request to Google's OAuth 2.0 server.
     # Use kwargs to set optional request parameters.
