@@ -67,6 +67,7 @@ def index():
         if "state" not in session:
             auth=get_auth()
             session["state"]=auth["state"]
+            print("?", auth["authorization_url"])
             return redirect(auth["authorization_url"])
         method="get"
         return redirect(url_for('slack', mtd=method))
