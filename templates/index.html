@@ -11,31 +11,32 @@
 <form class="verticalform" action="{{url_for('index')}}" method="post">
   {% if method == "post" %}
   <p>Google Spread Sheet is updated</p>
-  {% elif method == "get" %}
+  {% else %}
   <p>
     Enter infomation:
-    <p><input type="text" name="channel" placeholder="Slack Channel ID" /></p>
-    <p><input type="text" name="sheet-id" placeholder="Spread Sheet ID" /></p>
-  </p>
+      <p><input type="text" name="channel" placeholder="Slack Channel ID" /></p>
+      <p><input type="text" name="sheet-id" placeholder="Spread Sheet ID" /></p>
+    </p>
 
-  <p>
-    Enter duration:
-    <input
-      type="text"
-      class="form-control dp"
-      name="start_date"
-      placeholder="From"
-    />
-    <input
-      type="text"
-      class="form-control dp"
-      name="end_date"
-      placeholder="To"
-    />
-  </p>
-  <p><input type="submit" value="submit" /></p>
-  {% else %}
-  <p>Oops! Invalid information. Try again...</p>
-  {% endif %}
-</form>
+    <p>
+      Enter duration:
+      <input
+        type="text"
+        class="form-control dp"
+        name="start_date"
+        placeholder="From"
+        />
+        <input
+        type="text"
+        class="form-control dp"
+        name="end_date"
+        placeholder="To"
+        />
+      </p>
+      <p><input type="submit" value="submit" /></p>
+    </form>
+    {% if method == "error" %}
+    <p>Oops! Invalid information. Try again...</p>
+    {% endif %}
+{% endif %}
 {% endblock %}

@@ -3,19 +3,7 @@ from google.oauth2.service_account import Credentials
 import os
 
 
-def handle_env():
-    # if os.environ.get("ENV_VAR") == 'DEVELOPMENT':
-    #     env_var_info = {
-    #         'client_secret_path' : os.path.abspath(os.path.basename("../client_secret.json")), 
-    #         'credentials_path' : os.path.abspath(os.path.basename("../credentials.json")), 
-    #         'redirect_url':'http://localhost:8000'}
-    # else:
-    #     env_var_info = {
-    #         'client_secret_path' : '/etc/secrets/client_secret.json', 
-    #         'credentials_path' : '/etc/secrets/credentials.json', 
-    #         'redirect_url':'https://slack-chat-catcher.onrender.com'}
-    # return env_var_info
-        
+def handle_env():        
     return { #3項演算子
         'client_secret_path' : os.path.abspath(os.path.basename("../client_secret.json")), 
         'credentials_path' : os.path.abspath(os.path.basename("../credentials.json")), 

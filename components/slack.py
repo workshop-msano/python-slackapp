@@ -1,5 +1,5 @@
 import requests
-import datetime, time, os
+import datetime, os
 
 SLACK_URL_HIS = "https://slack.com/api/conversations.history"
 SLACK_URL_REP = "https://slack.com/api/conversations.replies"
@@ -8,26 +8,15 @@ SLACK_URL_USERSINFO = "https://slack.com/api/users.info"
 TOKEN = os.getenv("TOKEN") 
 
 def get_posts(channel_id, start_date, end_date):
-    # today = datetime.date.today()
-    # end_date = today + datetime.timedelta(days=1)
-    # start_date = today + datetime.timedelta(days=-10)
-    # start_date = "1/31/2023" #取得開始日
-    # formated_start_date = datetime.datetime.strptime(start_date,"%m/%d/%Y")
-    # Unix_start_date_timestamp = datetime.datetime.timestamp(formated_start_date) 
-    # formated_start_date = datetime.datetime.strptime(start_date,"%m/%d/%Y")
     formated_start_date = datetime.datetime.strptime(start_date,"%Y-%m-%d")
     Unix_start_date_timestamp = datetime.datetime.timestamp(formated_start_date) 
     formated_end_date = datetime.datetime.strptime(end_date,"%Y-%m-%d")
     Unix_end_date_timestamp = datetime.datetime.timestamp(formated_end_date) 
 
 
-
     payload = {
-        # "channel": os.getenv("CHANNEL"),
         "channel": channel_id,
-        # "oldest" : time.mktime(start_date.timetuple()),  
         "oldest" : Unix_start_date_timestamp,  
-        # "latest": time.mktime(end_date.timetuple()),
         "latest" : Unix_end_date_timestamp,
         "inclusive": True
     }
