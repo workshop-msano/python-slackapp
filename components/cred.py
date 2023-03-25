@@ -7,12 +7,12 @@ def get_auth():
     # Use the client_secret.json file to identify the application requesting
     # authorization. The client ID (from that file) and access scopes are required.
 
-    CURR_DIR = os.path.dirname(os.path.realpath(__file__))
+    # CURR_DIR = os.path.dirname(os.path.realpath(__file__))
     # client_secret_file=str(CURR_DIR)+'/client_secret.json'
     # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
     #     client_secret_file,
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        '/etc/secrets/client_secret_file',
+        '/etc/secrets/client_secret.json',
         scopes=['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive'])
 
     # Indicate where the API server will redirect the user after the user completes
