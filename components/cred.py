@@ -6,10 +6,10 @@ import os
 def get_auth():
     # Use the client_secret.json file to identify the application requesting
     # authorization. The client ID (from that file) and access scopes are required.
-    client_secret_path = os.path.abspath(os.path.basename("../client_secret.json"))
+    # client_secret_path = os.path.abspath(os.path.basename("../client_secret.json"))
 
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        client_secret_path,
+        "../client_secret_path",
         scopes=['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive'])
 
     # Indicate where the API server will redirect the user after the user completes
@@ -18,7 +18,6 @@ def get_auth():
     # configured in the API Console. If this value doesn't match an authorized URI,
     # you will get a 'redirect_uri_mismatch' error.
 
-    # flow.redirect_uri = 'http://localhost:8000'
     flow.redirect_uri = 'https://slack-chat-catcher.onrender.com'
 
 
@@ -37,6 +36,6 @@ def get_cred():
     # 2つのAPIを記述しないとリフレッシュトークンを3600秒毎に発行し続けなければならない
     scope = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
     #ダウンロードしたjsonファイル名をクレデンシャル変数に設定。
-    credentials_path = os.path.abspath(os.path.basename("../credentials.json"))
-    credentials = Credentials.from_service_account_file(credentials_path, scopes=scope)
+    # credentials_path = os.path.abspath(os.path.basename("../credentials.json"))
+    credentials = Credentials.from_service_account_file("../credentials_path", scopes=scope)
     return credentials
