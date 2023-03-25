@@ -6,7 +6,7 @@ from flask import Flask, redirect, request, url_for, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_datepicker import datepicker
 
-from components.cred import get_cred, get_auth
+from cred import get_cred, get_auth
 from components.slack import get_posts
 
 import os
