@@ -9,7 +9,7 @@ def get_auth():
     # client_secret_path = os.path.abspath(os.path.basename("../client_secret.json"))
 
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        "../client_secret_path",
+        "../client_secret",
         scopes=['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive'])
 
     # Indicate where the API server will redirect the user after the user completes
@@ -37,5 +37,5 @@ def get_cred():
     scope = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
     #ダウンロードしたjsonファイル名をクレデンシャル変数に設定。
     # credentials_path = os.path.abspath(os.path.basename("../credentials.json"))
-    credentials = Credentials.from_service_account_file("../credentials_path", scopes=scope)
+    credentials = Credentials.from_service_account_file("../credentials.json", scopes=scope)
     return credentials
