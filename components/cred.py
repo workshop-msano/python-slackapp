@@ -9,11 +9,9 @@ def get_auth():
     # client_secret_path = os.path.abspath(os.path.basename("../client_secret.json"))
 
     CURR_DIR = os.path.dirname(os.path.realpath(__file__))
-    print("CURR_DIR: ", CURR_DIR)
-    credential_file=str(CURR_DIR)+'/credentials.json'
-    print("credential_file: ", credential_file)
+    client_secret_file=str(CURR_DIR)+'/client_secret.json'
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        credential_file,
+        client_secret_file,
         scopes=['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive'])
 
     # Indicate where the API server will redirect the user after the user completes
@@ -39,7 +37,11 @@ def get_auth():
 def get_cred():
     # 2つのAPIを記述しないとリフレッシュトークンを3600秒毎に発行し続けなければならない
     scope = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
+
     #ダウンロードしたjsonファイル名をクレデンシャル変数に設定。
-    # credentials_path = os.path.abspath(os.path.basename("../credentials.json"))
-    credentials = Credentials.from_service_account_file("credentials.json", scopes=scope)
+    CURR_DIR = os.path.dirname(os.path.realpath(__file__))
+    print("CURR_DIR: ", CURR_DIR)
+    credential_file=str(CURR_DIR)+'/credentials.json'
+    print("credential_file: ", credential_file)
+    credentials = Credentials.from_service_account_file(credential_file, scopes=scope)
     return credentials
